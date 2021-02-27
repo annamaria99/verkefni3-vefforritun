@@ -2,16 +2,24 @@
 <section class="registrations">
   <h2 class="registrations__title">Undirskriftir</h2>
 
-  <% if (registrations.length === 0) { %>
+  <% if (formData.registrations.length === 0) { %>
     <p class="registrations__empty">Engar undirskriftir.</p>
   <% } else { %>
+    <% if (result._links.prev) { %>
+      <button class="prev-page">
+        <a href="<%= result._links.prev.href %>">Tilbaka</a>
+      </button>
+    <% } %>
+    <button class="next-page">
+      <a href="<%= result._links.next.href %>">Næsta</a>
+    </button>
     <table class="registrations__table" cellpadding="0">
       <tr>
         <th>Dags</th>
         <th>Nafn</th>
         <th>Athugasemd</th>
       </tr>
-      <% registrations.forEach((row) => { %>
+      <% formData.registrations.forEach((row) => { %>
         <tr>
           <td class="date"><%= formatDate(row.signed) %></td>
           <td class="name"><%= row.anonymous ? 'Nafnlaust' : row.name %></td>
