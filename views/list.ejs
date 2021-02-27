@@ -1,7 +1,7 @@
 
 <section class="registrations">
   <h2 class="registrations__title">Undirskriftir</h2>
-  <p>Fjöldi undirskrifta: </p>
+  <p class=signature-counter>Fjöldi undirskrifta: <%= amount.count %></p>
   <% if (formData.registrations.length === 0) { %>
     <p class="registrations__empty">Engar undirskriftir.</p>
   <% } else { %>
@@ -21,7 +21,7 @@
           <td class="comment"><%= row.comment %></td>
           <% if(user) { %>
             <td class="delete">
-              <form class="delete" method="post" action="/admin/delete/<%= row.id %>" enctype="application/x-www-form-urlencoded">
+              <form class="delete-form" method="post" action="/admin/delete/<%= row.id %>" enctype="application/x-www-form-urlencoded">
                 <button class="delete-button">Eyða</button>
               </form>
             </td>
@@ -30,10 +30,16 @@
       <% }) %>
       </tr>
     </table>
-    <% if (result._links.prev) { %>
-        <a class="prev-page" href="<%= result._links.prev.href %>">Fyrri síða</a>
-    <% } %>
-      <p>Síða <%= result.offset %> af "<%= result.pages %>" </p>
-      <a class="next-page" href="<%= result._links.next.href %>">Næsta síða</a>
+    <div>
+      <% if (result._links.prev) { %>
+          <div class="prev-page">
+            <a href="<%= result._links.prev.href %>">Fyrri síða</a>
+          </div>
+      <% } %>
+       <p class="page-counter">Síða <%= pageCount.currentPage %> af <%= pageCount.lastPage %> </p>
+       <div class="next-page">
+        <a href="<%= result._links.next.href %>">Næsta síða</a>
+      </div>
+    </div>
   <% } %>
 </section>

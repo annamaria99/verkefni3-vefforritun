@@ -106,14 +106,15 @@ export async function select(offset = 0, limit = 50) {
 }
 
 export async function counter() {
-  let result = [];
+  let result;
   try {
     const queryResult = await query(
       'SELECT COUNT(*) AS count FROM signatures;',
     );
 
     if (queryResult && queryResult.rows) {
-      result = queryResult.rows;
+      // eslint-disable-next-line prefer-destructuring
+      result = queryResult.rows[0];
     }
   } catch (e) {
     console.error('Error selecting signatures', e);

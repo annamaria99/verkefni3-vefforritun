@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
 import { catchErrors, ensureLoggedIn } from './utils.js';
-import { select, deleteRow } from './db.js';
+import { counter, select, deleteRow } from './db.js';
 
 export const router = express.Router();
 
@@ -16,11 +16,13 @@ const {
  * @param {object} res Response hlutur
  */
 async function userRoute(req, res) {
+  const { username } = req.user;
   let { offset = 0, limit = 50 } = req.query;
   offset = Number(offset);
   limit = Number(limit);
 
   const registrations = await select(offset, limit);
+  const amount = await counter();
 
   const errors = [];
   const formData = {
@@ -47,11 +49,18 @@ async function userRoute(req, res) {
     };
   }
 
-  return res.render('admin', { errors, formData, result });
+  const pageCount = {
+    currentPage: `${(offset / 50) + 1}`,
+    lastPage: `${Math.ceil(amount.count / 50)}`,
+  };
+
+  return res.render('admin', {
+    username, errors, formData, result, amount, pageCount,
+  });
 }
 
 /**
- * Route til að eyða undriskrift
+ * Route til að eyða undirskrift
  *
  * @param {object} req Request hlutur
  * @param {object} res Response hlutur

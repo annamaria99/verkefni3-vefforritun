@@ -186,3 +186,29 @@ button:hover {
   word-break: break-all;
   overflow-wrap: anywhere;
 }
+
+.delete-form {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.delete-button {
+  font-size: 1em;
+  margin-top: 0px;
+}
+
+.signature-counter {
+  margin-bottom: 20px;
+}
+
+.user-logged {
+  margin-bottom: 10px;
+}
+
+.page-counter {
+  text-align: center;
+}
+
+.next-page {
+  text-align: right;
+}

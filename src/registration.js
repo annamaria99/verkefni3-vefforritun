@@ -3,7 +3,9 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import xss from 'xss';
 import { catchErrors } from './utils.js';
-import { list, insert, select } from './db.js';
+import {
+  list, counter, insert, select,
+} from './db.js';
 
 export const router = express.Router();
 
@@ -17,6 +19,7 @@ async function paging(req, res) {
   limit = Number(limit);
 
   const registrations = await select(offset, limit);
+  const amount = await counter();
 
   const errors = [];
   const formData = {
@@ -47,7 +50,14 @@ async function paging(req, res) {
     };
   }
 
-  return res.render('index', { errors, formData, result });
+  const pageCount = {
+    currentPage: `${(offset / 50) + 1}`,
+    lastPage: `${Math.ceil(amount.count / 50)}`,
+  };
+
+  return res.render('index', {
+    errors, formData, result, amount, pageCount,
+  });
 }
 
 const nationalIdPattern = '^[0-9]{6}-?[0-9]{4}$';
