@@ -1,8 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import express from 'express';
-import { users } from './users.js';
 import { catchErrors, ensureLoggedIn } from './utils.js';
+import { select } from './db.js';
 
 export const router = express.Router();
+
+const {
+  PORT: port = 3000,
+} = process.env;
 
 /**
  * Route fyrir lista af notendum.
@@ -11,15 +16,38 @@ export const router = express.Router();
  * @param {object} res Response hlutur
  */
 async function userRoute(req, res) {
-  const list = await users();
+  let { offset = 0, limit = 50 } = req.query;
+  offset = Number(offset);
+  limit = Number(limit);
 
-  const data = {
-    title: 'Notendur',
-    users: list,
-    page: 'admin',
+  const registrations = await select(offset, limit);
+
+  const errors = [];
+  const formData = {
+    registrations,
   };
 
-  return res.render('users', data);
+  const result = {
+    _links: {
+      self: {
+        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+      },
+    },
+  };
+
+  if (offset > 0) {
+    result._links.prev = {
+      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+    };
+  }
+
+  if (registrations.length <= limit) {
+    result._links.next = {
+      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+    };
+  }
+
+  return res.render('admin', { errors, formData, result });
 }
 
 router.get('/', ensureLoggedIn, catchErrors(userRoute));

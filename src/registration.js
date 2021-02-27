@@ -3,10 +3,7 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import xss from 'xss';
 import { catchErrors } from './utils.js';
-
-import {
-  list, insert, select, counter,
-} from './db.js';
+import { list, insert, select } from './db.js';
 
 export const router = express.Router();
 
@@ -20,7 +17,6 @@ async function paging(req, res) {
   limit = Number(limit);
 
   const registrations = await select(offset, limit);
-  const amount = await counter();
 
   const errors = [];
   const formData = {
@@ -29,7 +25,6 @@ async function paging(req, res) {
     anonymous: false,
     comment: '',
     registrations,
-    amount,
   };
 
   const result = {

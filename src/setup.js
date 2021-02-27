@@ -55,6 +55,10 @@ async function mock(n) {
 }
 
 async function create() {
+  await query('DROP TABLE IF EXISTS signatures');
+  await query('DROP TABLE IF EXISTS users');
+  console.info('Töflu eytt');
+
   const data = await readFile(schemaFile);
 
   await query(data.toString('utf-8'));

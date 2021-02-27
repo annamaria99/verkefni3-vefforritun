@@ -101,12 +101,12 @@ app.post(
   '/login',
 
   passport.authenticate('local', {
-    failureMessage: 'Notandi eða lykilorð vitlaust.',
+    failureMessage: 'Notandanafn eða lykilorð vitlaust.',
     failureRedirect: '/login',
   }),
 
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/admin');
   },
 );
 
