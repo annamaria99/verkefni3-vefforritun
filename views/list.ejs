@@ -1,18 +1,10 @@
 
 <section class="registrations">
   <h2 class="registrations__title">Undirskriftir</h2>
-
+  <p>Fjöldi undirskrifta: <%= formData.amount.count%> </p>
   <% if (formData.registrations.length === 0) { %>
     <p class="registrations__empty">Engar undirskriftir.</p>
   <% } else { %>
-    <% if (result._links.prev) { %>
-      <button class="prev-page">
-        <a href="<%= result._links.prev.href %>">Tilbaka</a>
-      </button>
-    <% } %>
-    <button class="next-page">
-      <a href="<%= result._links.next.href %>">Næsta</a>
-    </button>
     <table class="registrations__table" cellpadding="0">
       <tr>
         <th>Dags</th>
@@ -28,5 +20,10 @@
       <% }) %>
       </tr>
     </table>
+    <% if (result._links.prev) { %>
+        <a class="prev-page" href="<%= result._links.prev.href %>">Fyrri síða</a>
+    <% } %>
+      <p>Síða <%= result.offset %> af "<%= result.pages %>" </p>
+      <a class="next-page" href="<%= result._links.next.href %>">Næsta síða</a>
   <% } %>
 </section>

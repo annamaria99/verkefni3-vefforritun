@@ -2,8 +2,11 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import xss from 'xss';
+import { catchErrors } from './utils.js';
 
-import { list, insert, select } from './db.js';
+import {
+  list, insert, select, counter,
+} from './db.js';
 
 export const router = express.Router();
 
@@ -11,40 +14,13 @@ const {
   PORT: port = 3000,
 } = process.env;
 
-/**
- * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
- *
- * @param {function} fn Middleware sem grípa á villur fyrir
- * @returns {function} Middleware með villumeðhöndlun
- */
-function catchErrors(fn) {
-  return (req, res, next) => fn(req, res, next).catch(next);
-}
-
-/**
-async function index(req, res) {
-  const errors = [];
-  const formData = {
-    name: '',
-    nationalId: '',
-    anonymous: false,
-    comment: '',
-  };
-
-  const registrations = await list();
-
-  res.render('index', {
-    errors, formData, registrations,
-  });
-}
-*/
-
 async function paging(req, res) {
   let { offset = 0, limit = 50 } = req.query;
   offset = Number(offset);
   limit = Number(limit);
 
   const registrations = await select(offset, limit);
+  const amount = await counter();
 
   const errors = [];
   const formData = {
@@ -53,6 +29,7 @@ async function paging(req, res) {
     anonymous: false,
     comment: '',
     registrations,
+    amount,
   };
 
   const result = {

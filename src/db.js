@@ -105,6 +105,23 @@ export async function select(offset = 0, limit = 50) {
   return [];
 }
 
+export async function counter() {
+  let result = [];
+  try {
+    const queryResult = await query(
+      'SELECT COUNT(*) AS count FROM signatures;',
+    );
+
+    if (queryResult && queryResult.rows) {
+      result = queryResult.rows;
+    }
+  } catch (e) {
+    console.error('Error selecting signatures', e);
+  }
+
+  return result;
+}
+
 export async function deleteRow(id) {
   const q = 'DELETE FROM signatures WHERE id = $1';
 
