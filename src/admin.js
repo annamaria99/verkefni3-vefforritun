@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
 import { catchErrors, ensureLoggedIn } from './utils.js';
-import { select } from './db.js';
+import { select, deleteRow } from './db.js';
 
 export const router = express.Router();
 
@@ -50,4 +50,19 @@ async function userRoute(req, res) {
   return res.render('admin', { errors, formData, result });
 }
 
+/**
+ * Route til að eyða undriskrift
+ *
+ * @param {object} req Request hlutur
+ * @param {object} res Response hlutur
+ */
+async function deleteSignatures(req, res) {
+  const { id } = req.params;
+
+  await deleteRow([id]);
+
+  return res.redirect('/admin');
+}
+
 router.get('/', ensureLoggedIn, catchErrors(userRoute));
+router.post('/delete/:id', ensureLoggedIn, catchErrors(deleteSignatures));
