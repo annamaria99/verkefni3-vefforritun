@@ -53,7 +53,7 @@ async function mock(n) {
       comment = faker.lorem.sentence();
       anonymous = true;
     }
-    const signed = faker.date.between('2021-02-13', '2021-02-27');
+    const signed = faker.date.between('2021-02-13', '2021-03-01');
     const q = `
       INSERT INTO signatures (name, nationalId, comment, anonymous, signed)
       VALUES ($1, $2, $3, $4, $5)`;

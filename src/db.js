@@ -90,7 +90,7 @@ export async function select(offset = 0, limit = 50) {
   const client = await pool.connect();
 
   try {
-    const q = 'SELECT * FROM signatures ORDER BY signed OFFSET $1 LIMIT $2';
+    const q = 'SELECT * FROM signatures ORDER BY signed DESC OFFSET $1 LIMIT $2';
     const res = await client.query(q, [offset, limit]);
 
     return res.rows;
