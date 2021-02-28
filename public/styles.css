@@ -205,10 +205,9 @@ button:hover {
   margin-bottom: 10px;
 }
 
-.page-counter {
-  text-align: center;
-}
-
-.next-page {
-  text-align: right;
+.pages {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
 }
