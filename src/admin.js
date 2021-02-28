@@ -28,20 +28,20 @@ async function userRoute(req, res) {
   const result = {
     _links: {
       self: {
-        href: `/?offset=${offset}&limit=${limit}`,
+        href: `/admin/?offset=${offset}&limit=${limit}`,
       },
     },
   };
 
   if (offset > 0) {
     result._links.prev = {
-      href: `/?offset=${offset - limit}&limit=${limit}`,
+      href: `/admin/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (registrations.length <= limit) {
     result._links.next = {
-      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/admin/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 

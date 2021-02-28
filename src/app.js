@@ -1,6 +1,5 @@
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-
 import express from 'express';
 import dotenv from 'dotenv';
 import { format } from 'date-fns';
@@ -117,7 +116,6 @@ app.get('/logout', (req, res) => {
 });
 
 app.use('/', registrationRouter);
-// app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 
 /**
