@@ -13,9 +13,7 @@ if (!connectionString) {
   process.exit(1);
 }
 
-// Notum SSL tengingu við gagnagrunn ef við erum *ekki* í development mode, þ.e.a.s. á local vél
 const ssl = nodeEnv !== 'development' ? { rejectUnauthorized: false } : false;
-
 const pool = new pg.Pool({ connectionString, ssl });
 
 pool.on('error', (err) => {
