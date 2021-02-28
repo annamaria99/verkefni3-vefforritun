@@ -8,19 +8,20 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import session from 'express-session';
 import { userStrategy, serializeUser, deserializeUser } from './users.js';
-
 import { router as registrationRouter } from './registration.js';
-// import { router as loginRouter } from './login.js';
 import { router as adminRouter } from './admin.js';
 
 dotenv.config();
 
-const sessionSecret = 'leyndarmál';
-
 const {
   PORT: port = 3000,
+  SESSION_SECRET: sessionSecret,
 } = process.env;
 
+if (!sessionSecret) {
+  console.error('Vantar SESSION_SECRET');
+  process.exit(1);
+}
 const app = express();
 
 app.use(session({
