@@ -9,10 +9,6 @@ import {
 
 export const router = express.Router();
 
-const {
-  PORT: port = 3000,
-} = process.env;
-
 async function paging(req, res) {
   let { offset = 0, limit = 50 } = req.query;
   offset = Number(offset);
@@ -33,20 +29,20 @@ async function paging(req, res) {
   const result = {
     _links: {
       self: {
-        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+        href: `/?offset=${offset}&limit=${limit}`,
       },
     },
   };
 
   if (offset > 0) {
     result._links.prev = {
-      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+      href: `/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (registrations.length <= limit) {
     result._links.next = {
-      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 

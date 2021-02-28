@@ -5,10 +5,6 @@ import { counter, select, deleteRow } from './db.js';
 
 export const router = express.Router();
 
-const {
-  PORT: port = 3000,
-} = process.env;
-
 /**
  * Route fyrir lista af notendum.
  *
@@ -32,20 +28,20 @@ async function userRoute(req, res) {
   const result = {
     _links: {
       self: {
-        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+        href: `/?offset=${offset}&limit=${limit}`,
       },
     },
   };
 
   if (offset > 0) {
     result._links.prev = {
-      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+      href: `/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (registrations.length <= limit) {
     result._links.next = {
-      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 
