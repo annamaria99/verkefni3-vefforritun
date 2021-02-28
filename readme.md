@@ -1,5 +1,16 @@
 # Vefforritun 2, 2021, verkefni 3
 
+Keyrt með:
+```bash
+npm install
+npm run test
+npm run setup
+npm start
+```
+`npm run setup` býr til einn notanda:
+username: admin
+password: 123
+
 Framhald af [verkefni 2](https://github.com/vefforritun/vef2-2021-v2).
 
 [Vídeó yfirferð](https://youtu.be/GW-mbrG5dEs).
