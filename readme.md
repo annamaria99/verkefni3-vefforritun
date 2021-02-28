@@ -8,7 +8,9 @@ npm run setup
 npm start
 ```
 `npm run setup` býr til einn notanda:
+
 username: admin
+
 password: 123
 
 Framhald af [verkefni 2](https://github.com/vefforritun/vef2-2021-v2).
